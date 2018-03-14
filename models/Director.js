@@ -6,7 +6,7 @@ module.exports.getAll = () => {
     db.all('SELECT * FROM directors', (err, direx) => {
       if (err) reject(err);
       resolve(direx);
-    });    
+    });
   });
 };
 

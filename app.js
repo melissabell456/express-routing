@@ -5,13 +5,22 @@ const app = express();
 require('dotenv').config();
 const routes = require('./routes/');
 
-console.log('Welcome to express');
-
 // middleware stack below
 app.use("/api/v1/", routes);
 
+// main error handler
+app.use( (req, res, next) => {
+  let err = new Error("Invalid Query");
+  err.status = 404;
+  next(err);
+});
 
-// TODO Add error handler
+app.use((err, req, res, next) => {
+  res.json({
+    message: "Invalid Query",
+    err: err.message
+  });
+});
 
 // port to listen on:
 const port = process.env.PORT || 3000;
