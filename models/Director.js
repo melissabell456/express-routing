@@ -12,7 +12,10 @@ module.exports.getAll = () => {
 
 module.exports.getOne = (directorID) => {
   return new Promise( (resolve, reject) => {
-    db.all(`SELECT * FROM directors WHERE dir_id = ${directorID}`, (err, director) => {
+    db.all(
+      `SELECT directors.*, movies.name as movieName 
+      FROM directors
+      JOIN movies WHERE directors.dir_id = ${directorID}`, (err, director) => {
       if (err) reject(err);
       resolve(director);
     });    
